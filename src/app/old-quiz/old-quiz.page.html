@@ -1,0 +1,191 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" mode="ios"></ion-back-button>
+        </ion-buttons>
+        <ion-title>Marked Quiz</ion-title>
+        <ion-fab-button slot="end">
+            <b *ngIf="myOldQuiz">{{myOldQuiz.achievedMarks + ' / ' + myOldQuiz.totalMarks}}</b>
+            <b *ngIf="!myOldQuiz">{{'Marks'}}</b>
+        </ion-fab-button>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-row class="ion-justify-content-center">
+        <ion-col size="11" class="py-0">
+            <div *ngFor="let question of myOldQuiz?.solvedQuestions; let i=index">
+                <ion-card *ngIf="question.isCorrect && question.type === 'mcqs'" class="withdrawCard" style="background-color: #fafafa">
+                    <ion-radio-group value="{{question.selectedAnswer}}">
+                        <ion-list-header>
+                            <ion-label>
+                                Q{{i+1}}: {{question?.question}}
+                            </ion-label>
+                        </ion-list-header>
+                        <ion-item lines="none">
+                            <ion-radio color="{{(question.selectedAnswer === question.optionA) ? 'success' : ''}}" value="{{question?.optionA}}"></ion-radio>
+                            <ion-label color="{{(question.selectedAnswer === question.optionA) ? 'success' : ''}}">{{question?.optionA}}</ion-label>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-radio color="{{(question.selectedAnswer === question.optionB) ? 'success' : ''}}" value="{{question?.optionB}}"></ion-radio>
+                            <ion-label color="{{(question.selectedAnswer === question.optionB) ? 'success' : ''}}">{{question?.optionB}}</ion-label>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-radio color="{{(question.selectedAnswer === question.optionC) ? 'success' : ''}}" value="{{question?.optionC}}"></ion-radio>
+                            <ion-label color="{{(question.selectedAnswer === question.optionC) ? 'success' : ''}}">{{question?.optionC}}</ion-label>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-radio color="{{(question.selectedAnswer === question.optionD) ? 'success' : ''}}" value="{{question?.optionD}}"></ion-radio>
+                            <ion-label color="{{(question.selectedAnswer === question.optionD) ? 'success' : ''}}">{{question?.optionD}}</ion-label>
+                        </ion-item>
+                    </ion-radio-group>
+                    <ion-item>
+                        <ion-icon slot="start" color="primary" name="laptop"></ion-icon>
+                        <ion-label>Marks: {{question?.answerMarks}} | Status: Correct</ion-label>
+                        <ion-icon color="success" slot="end" name="checkmark"></ion-icon>
+                    </ion-item>
+                </ion-card>
+                <ion-card *ngIf="!question.isCorrect && question.type === 'mcqs'" class="withdrawCard" style="background-color: #fafafa">
+                    <ion-radio-group value="{{getColor(question, 'A') === '' ? '' : question?.optionA}}">
+                        <ion-list-header>
+                            <ion-label>
+                                Q{{i+1}}: {{question?.question}}
+                            </ion-label>
+                        </ion-list-header>
+                        <ion-item lines="none">
+                            <ion-radio color="{{getColor(question, 'A')}}" value="{{question?.optionA}}"></ion-radio>
+                            <ion-label color="{{getColor(question, 'A')}}">{{question?.optionA}}</ion-label>
+                        </ion-item>
+                    </ion-radio-group>
+                    <ion-radio-group value="{{getColor(question, 'B') === '' ? '' : question?.optionB}}">
+                        <ion-item lines="none">
+                            <ion-radio color="{{getColor(question, 'B')}}" value="{{question?.optionB}}"></ion-radio>
+                            <ion-label color="{{getColor(question, 'B')}}">{{question?.optionB}}</ion-label>
+                        </ion-item>
+                    </ion-radio-group>
+                    <ion-radio-group value="{{getColor(question, 'C') === '' ? '' : question?.optionC}}">
+                        <ion-item lines="none">
+                            <ion-radio color="{{getColor(question, 'C')}}" value="{{question?.optionC}}"></ion-radio>
+                            <ion-label color="{{getColor(question, 'C')}}">{{question?.optionC}}</ion-label>
+                        </ion-item>
+                    </ion-radio-group>
+                    <ion-radio-group value="{{getColor(question, 'D') === '' ? '' : question?.optionD}}">
+                        <ion-item lines="none">
+                            <ion-radio color="{{getColor(question, 'D')}}" value="{{question?.optionD}}"></ion-radio>
+                            <ion-label color="{{getColor(question, 'D')}}">{{question?.optionD}}</ion-label>
+                        </ion-item>
+                    </ion-radio-group>
+                    <ion-item>
+                        <ion-icon slot="start" color="primary" name="laptop"></ion-icon>
+                        <ion-label>Marks: {{question?.answerMarks}} | Status: Incorrect</ion-label>
+                        <ion-icon color="danger" slot="end" name="close"></ion-icon>
+                    </ion-item>
+                </ion-card>
+                <ion-card *ngIf="question.type === 'fillInBlanks'" class="withdrawCard" style="background-color: #fafafa">
+
+                    <ion-list-header>
+                        <ion-label>Q {{i + 1}}: {{question?.part1 ? question.part1 : ''}}
+                            <b><u style="{{question.isCorrect ? 'color: green' : 'color: red'}}">{{question.selectedAnswer}}</u> </b>
+                            {{question?.part2 ? question.part2 : ''}}?
+                        </ion-label>
+                    </ion-list-header>
+                    <ion-item>
+                        <ion-icon slot="start" color="primary" name="laptop"></ion-icon>
+                        <ion-label>Marks: {{question?.answerMarks}} | Status: Correct</ion-label>
+                        <ion-icon *ngIf="question.isCorrect" color="success" slot="end" name="checkmark"></ion-icon>
+                        <ion-icon *ngIf="!question.isCorrect" color="danger" slot="end" name="close"></ion-icon>
+                    </ion-item>
+                </ion-card>
+                <ion-card *ngIf="question.isCorrect && question.type === 'trueFalse'" class="withdrawCard" style="background-color: #fafafa">
+                    <ion-radio-group value="{{question.selectedAnswer.charAt(0).toUpperCase() + question.selectedAnswer.slice(1)}}">
+                        <ion-list-header>
+                            <ion-label>
+                                Q{{i+1}}: {{question?.question}}
+                            </ion-label>
+                        </ion-list-header>
+                        <ion-item lines="none">
+                            <ion-radio color="{{(question.selectedAnswer.toLowerCase() === question.optionA.toLowerCase()) ? 'success' : ''}}" value="{{question?.optionA}}"></ion-radio>
+                            <ion-label color="{{(question.selectedAnswer.toLowerCase() === question.optionA.toLowerCase()) ? 'success' : ''}}">{{question?.optionA}}</ion-label>
+                        </ion-item>
+                        <ion-item lines="none">
+                            <ion-radio color="{{(question.selectedAnswer === question.optionB) ? 'success' : ''}}" value="{{question?.optionB}}"></ion-radio>
+                            <ion-label color="{{(question.selectedAnswer === question.optionB) ? 'success' : ''}}">{{question?.optionB}}</ion-label>
+                        </ion-item>
+                    </ion-radio-group>
+                    <ion-item>
+                        <ion-icon slot="start" color="primary" name="laptop"></ion-icon>
+                        <ion-label>Marks: {{question?.answerMarks}} | Status: Correct</ion-label>
+                        <ion-icon color="success" slot="end" name="checkmark"></ion-icon>
+                    </ion-item>
+                </ion-card>
+                <ion-card *ngIf="question.selectedAnswer === 'false' && !question.isCorrect && question.type === 'trueFalse'" class="withdrawCard" style="background-color: #fafafa">
+                    <ion-radio-group value="True">
+                        <ion-list-header>
+                            <ion-label>
+                                Q{{i+1}}: {{question?.question}}
+                            </ion-label>
+                        </ion-list-header>
+                        <ion-item lines="none">
+                            <ion-radio color="success" value="True"></ion-radio>
+                            <ion-label color="success">True</ion-label>
+                        </ion-item>
+                    </ion-radio-group>
+                    <ion-radio-group value="False">
+                        <ion-item lines="none">
+                            <ion-radio color="danger" value="False"></ion-radio>
+                            <ion-label color="danger">False</ion-label>
+                        </ion-item>
+                    </ion-radio-group>
+                    <ion-item>
+                        <ion-icon slot="start" color="primary" name="laptop"></ion-icon>
+                        <ion-label>Marks: {{question?.answerMarks}} | Status: Incorrect</ion-label>
+                        <ion-icon color="danger" slot="end" name="close"></ion-icon>
+                    </ion-item>
+                </ion-card>
+
+                <ion-card *ngIf="question.selectedAnswer === 'true' && !question.isCorrect && question.type === 'trueFalse'" class="withdrawCard" style="background-color: #fafafa">
+                    <ion-radio-group value="False">
+                        <ion-list-header>
+                            <ion-label>
+                                Q{{i+1}}: {{question?.question}}
+                            </ion-label>
+                        </ion-list-header>
+                        <ion-item lines="none">
+                            <ion-radio color="success" value="False"></ion-radio>
+                            <ion-label color="success">False</ion-label>
+                        </ion-item>
+                    </ion-radio-group>
+                    <ion-radio-group value="True">
+                        <ion-item lines="none">
+                            <ion-radio color="danger" value="True"></ion-radio>
+                            <ion-label color="danger">True</ion-label>
+                        </ion-item>
+                    </ion-radio-group>
+                    <ion-item>
+                        <ion-icon slot="start" color="primary" name="laptop"></ion-icon>
+                        <ion-label>Marks: {{question?.answerMarks}} | Status: Incorrect</ion-label>
+                        <ion-icon color="danger" slot="end" name="close"></ion-icon>
+                    </ion-item>
+                </ion-card>
+
+                <ion-card *ngIf="question.type === 'shortQuestions'" class="withdrawCard" style="background-color: #fafafa">
+                    <ion-list-header>
+                        <ion-label>
+                            Q{{i+1}}: {{question?.question}}
+                        </ion-label>
+                    </ion-list-header>
+                    <ion-item>
+                        <p><b>Your Answer:</b>{{question?.selectedAnswer}}</p>
+                    </ion-item>
+                    <ion-item>
+                        <ion-icon slot="start" color="primary" name="laptop"></ion-icon>
+                        <ion-label>Marks: {{question?.answerMarks}} | Status: {{question.isCorrect ? 'Correct' : 'InCorrect'}}</ion-label>
+                        <ion-icon *ngIf="question.isCorrect" color="success" slot="end" name="checkmark"></ion-icon>
+                        <ion-icon *ngIf="!question.isCorrect" color="danger" slot="end" name="close"></ion-icon>
+                    </ion-item>
+                </ion-card>
+            </div>
+        </ion-col>
+    </ion-row>
+</ion-content>
+

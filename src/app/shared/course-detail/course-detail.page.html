@@ -1,0 +1,66 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button text="" mode="ios"></ion-back-button>
+        </ion-buttons>
+        <ion-title>{{'Data Sciences'}}</ion-title>
+        <ion-icon *ngIf="user?.isTeacher" (click)="teacherOptions()" color="primary" slot="end" name="ellipsis-vertical" size="large"></ion-icon>
+        <ion-icon *ngIf="user?.isStudent" (click)="studentOptions()" color="primary" slot="end" name="ellipsis-vertical" size="large"></ion-icon>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-row class="ion-justify-content-center">
+        <ion-col size="11" class="py-0">
+            <ion-card class="withdrawCard">
+                <ion-label style="padding-left: 13px"><b>Previous Quiz</b></ion-label>
+                <div *ngIf="!olQuizzes.length">
+                    <h1 style="text-align: center; padding: 30px">No Quiz</h1>
+                </div>
+                <ion-card style="border-radius: 7px" (click)="goToDetail(item)" *ngFor="let item of olQuizzes">
+                    <ion-item lines="none">
+                        <ion-icon name="bookmark" color="primary"></ion-icon>
+                        <ion-label style="padding-left: 5px">{{item.title}}</ion-label>
+                        <ion-icon slot="end" color="primary" name="chevron-forward-outline"></ion-icon>
+                    </ion-item>
+                </ion-card>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+        <ion-col size="11" class="py-0">
+            <ion-card class="withdrawCard">
+                <ion-label style="padding-left: 13px"><b>Upcoming Quiz</b></ion-label>
+                <div *ngIf="!upComingQuizzes.length">
+                    <h1 style="text-align: center; padding: 30px">No Quiz</h1>
+                </div>
+                <ion-card style="border-radius: 10px" (click)="attemptQuiz(item)"  *ngFor="let item of upComingQuizzes">
+                    <ion-item lines="none">
+                        <ion-icon name="bookmark" color="primary"></ion-icon>
+                        <ion-label style="padding-left: 5px">{{item?.title}}</ion-label>
+                    </ion-item>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-item lines="none">
+                                <ion-icon name="calendar" color="primary"></ion-icon>
+                                <p style="padding-left: 5px">{{item?.date  | date: 'yyyy-MM-dd'}}</p>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-item lines="none">
+                                <ion-icon name="time" color="primary"></ion-icon>
+                                <p style="padding-left: 5px">{{item?.time  | date: 'shortTime'}}</p>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+                </ion-card>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+</ion-content>
+<!--<ion-footer>-->
+<!--    <ion-button routerLink="/add-quiz" expand="block">-->
+<!--        <ion-icon name="add" size="large"></ion-icon>-->
+<!--        Add Quiz-->
+<!--    </ion-button>-->
+<!--</ion-footer>-->

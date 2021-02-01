@@ -1,0 +1,73 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Users</ion-title>
+        <ion-icon (click)="addUser()" color="primary" name="add-circle" slot="end" size="large"></ion-icon>
+    </ion-toolbar>
+    <ion-segment (ionChange)="segmentChanged($event)" color="primary" value="standard">
+        <ion-segment-button value="standard" layout="icon-start">
+            <ion-label style="text-transform: capitalize">Students</ion-label><ion-icon name="school-sharp"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button value="hybrid" layout="icon-start">
+            <ion-icon name="people"></ion-icon><ion-label style="text-transform: capitalize">Faculty</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-row class="ion-justify-content-center">
+        <ion-col *ngIf="teachers" size="11" class="py-0">
+            <ion-card class="searchBar">
+                <ion-item lines="none">
+                    <ion-icon name="search" color="primary" slot="start"></ion-icon>
+                    <ion-input (ionChange)="searchStudents()" [(ngModel)]="studentSearch" *ngIf="student" placeholder="Enter Email"></ion-input>
+                    <ion-input (ionChange)="searchTeachers()" [(ngModel)]="facultySearch" *ngIf="faculty" placeholder="Enter name"></ion-input>
+                    <ion-icon (click)="clearSearch()" name="close" color="primary" slot="end"></ion-icon>
+                </ion-item>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+    <div *ngIf="student">
+        <ion-row class="ion-justify-content-center">
+            <ion-col *ngIf="students" size="11" class="py-0">
+                <ion-card *ngFor="let item of filteredStudents" style="text-transform: capitalize;" class="withdrawCard">
+                    <ion-item lines="none">
+                        <div class="profile">
+                            <img style="margin-top: 6px;" class="userImg" src="{{item?.profileImage || 'assets/image.png'}}"/>
+                        </div>
+                        <ion-label style="padding-left: 15px">{{item?.fullName}}</ion-label>
+                        <ion-icon (click)="moreOptions(item)" color="primary" size="large" slot="end"
+                                  name="ellipsis-vertical"></ion-icon>
+                    </ion-item>
+                </ion-card>
+            </ion-col>
+            <ion-col *ngIf="!students" size="11" class="py-0">
+                <ion-row *ngFor="let item of [1,2,3,4,5,6,7]">
+                    <ion-col size="2"><ion-skeleton-text animated style="width: 100%; height: 40px"></ion-skeleton-text></ion-col>
+                    <ion-col size="10"><ion-skeleton-text animated style="width: 100%; height: 40px"></ion-skeleton-text></ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+    </div>
+    <div *ngIf="faculty">
+        <ion-row class="ion-justify-content-center">
+            <ion-col size="11" class="py-0">
+                <ion-card *ngFor="let item of filteredTeachers" style="text-transform: capitalize;" class="withdrawCard">
+                    <ion-item lines="none">
+                        <div class="profile">
+                            <img style="margin-top: 6px;" class="userImg" src="{{item?.profileImage || 'assets/image.png'}}"/>
+                        </div>
+                        <ion-label style="padding-left: 15px">{{item?.fullName}}</ion-label>
+                        <ion-icon (click)="moreOptions(item)" color="primary" size="large" slot="end"
+                                  name="ellipsis-vertical"></ion-icon>
+                    </ion-item>
+                </ion-card>
+            </ion-col>
+            <ion-col *ngIf="!teachers" size="11" class="py-0">
+                <ion-row *ngFor="let item of [1,2,3,4,5,6,7]">
+                    <ion-col size="2"><ion-skeleton-text animated style="width: 100%; height: 40px"></ion-skeleton-text></ion-col>
+                    <ion-col size="10"><ion-skeleton-text animated style="width: 100%; height: 40px"></ion-skeleton-text></ion-col>
+                </ion-row>
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-content>

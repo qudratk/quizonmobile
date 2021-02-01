@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button mode="ios" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Course</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="courseForm">
+    <ion-row class="ion-justify-content-center">
+      <ion-col style="padding-top: 60px" size="11">
+        <ion-item lines="none" class="itemCont">
+          <ion-input formControlName="name" type="text" placeholder="Course Full Name"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="itemCont">
+          <ion-input formControlName="ch" type="text" placeholder="Credit Hours"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="itemCont">
+          <ion-input formControlName="courseCode" type="text" placeholder="Course Code"></ion-input>
+        </ion-item>
+        <ion-item lines="none" class="itemCont">
+          <ion-datetime formControlName="startDate" type="text" placeholder="Start Date"></ion-datetime>
+        </ion-item>
+        <ion-item lines="none" class="itemCont">
+          <ion-datetime formControlName="endDate" type="text" placeholder="End Date"></ion-datetime>
+        </ion-item>
+        <ion-button class="itemCont" [disabled]="courseForm.invalid" (click)="addCourse()"
+                    color="primary" type="submit" expand="block">Add Course</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

@@ -1,0 +1,47 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button mode="ios" text=""></ion-back-button>
+        </ion-buttons>
+        <ion-title>Result</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div style="display: block; padding: 40px 0px 0px 0px">
+        <canvas baseChart style="padding: 0px 15px;"
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+    </div>
+    <div>
+        <ion-card style="border-radius: 12px; margin: 15px; padding: 20px;">
+            <ion-card-title>Object Oriented Paradigm</ion-card-title>
+            <ion-card-subtitle style="padding: 10px 0px 0px 0px;">
+                OOP is core course of Computer Science and Software Engineering.
+                In that course discus about the core concepts of OOPS.
+            </ion-card-subtitle>
+            <ion-card-content style="padding: 10px 10px 0px 0px">
+                <p>Instructor</p>
+                <h2 style="color: #294181"><b>Sayyad Muhammad Saqlain</b></h2>
+            </ion-card-content>
+        </ion-card>
+    </div>
+      <div style="display: block; padding-top: 20px">
+        <canvas baseChart
+                [data]="pieChartData"
+                [labels]="pieChartLabels"
+                [chartType]="pieChartType"
+                [options]="pieChartOptions"
+                [plugins]="pieChartPlugins"
+                [legend]="pieChartLegend">
+        </canvas>
+      </div>
+<!--    <a style="padding: 20px" href="https://qob.herokuapp.com/">-->
+<!--        <b>Download Report</b>-->
+<!--    </a>-->
+</ion-content>

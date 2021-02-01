@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "788525031845",
+    "firebase_url": "https://quiz-on-mobile-app-default-rtdb.firebaseio.com",
+    "project_id": "quiz-on-mobile-app",
+    "storage_bucket": "quiz-on-mobile-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788525031845:android:84af455fcf916809c0884c",
+        "android_client_info": {
+          "package_name": "com.ionic.quiz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "788525031845-olo08oo7q55o7jtc34s604714ac1m00c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD31xi8SZQ4P4xNb1xUMtbRnX-8epVz90M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "788525031845-olo08oo7q55o7jtc34s604714ac1m00c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

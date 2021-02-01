@@ -1,0 +1,82 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Courses</ion-title>
+        <ion-icon *ngIf="user?.isStudent" (click)="joinClass()" color="primary" name="add-circle" slot="end" size="large"></ion-icon>
+        <ion-icon *ngIf="user?.isTeacher" (click)="addCourse()" color="primary" name="add-circle" slot="end" size="large"></ion-icon>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="!loading">
+    <ion-refresher slot="fixed" (ionRefresh)="loadDataAgain($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <h3 style="color: lightgray; padding-left: 50px; padding-top: 70px;">Please "Pull to Refresh" the page</h3>
+    <h1 style="color: lightgray; padding-left: 45%;">OR</h1>
+    <h3 style="color: lightgray; padding-left: 50px;">check your internet connection</h3>
+</ion-content>
+
+<ion-content *ngIf="loading">
+<!--    <ion-refresher slot="fixed" (ionRefresh)="loadDataAgain($event)">-->
+<!--        <ion-refresher-content></ion-refresher-content>-->
+<!--    </ion-refresher>-->
+    <ion-row class="ion-justify-content-center">
+        <ion-col *ngIf="courses" size="11" class="py-0">
+            <ion-card style="text-transform: capitalize;" (click)="goToDetail(iteration)"
+                      class="withdrawCard" *ngFor="let iteration of courses let i = index">
+                <ion-card-header>
+                    <ion-item>
+                        <ion-card-title style="text-transform: capitalize;">
+                            <ion-icon color="primary" name="bookmark" size="small"></ion-icon>
+                            {{iteration?.name}}</ion-card-title>
+                    </ion-item>
+<!--                    <ion-item lines="none">-->
+<!--                        <ion-icon slot="start" color="primary" name="people" size="small"></ion-icon>-->
+<!--                        <p>Students | {{getNoOfStudents(iteration?.key) || '0'}}</p>-->
+<!--                    </ion-item>-->
+                    <ion-row style="padding-left: 5%">
+                        <ion-col size="6">Start Date</ion-col>
+                        <ion-col size="6">End Date</ion-col>
+                    </ion-row>
+                    <ion-row style="padding-left: 5%">
+                        <ion-col size="6">
+                            <ion-label style="text-transform: capitalize;">
+                                <ion-icon color="primary" name="calendar" size="small"></ion-icon>
+                                {{iteration?.startDate | date: 'dd MM yyyy'}}</ion-label>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-label style="text-transform: capitalize;">
+                                <ion-icon color="primary" name="calendar" size="small"></ion-icon>
+                                {{iteration?.endDate | date: 'dd MM yyyy'}}</ion-label>
+                        </ion-col>
+                    </ion-row>
+                </ion-card-header>
+            </ion-card>
+        </ion-col>
+
+        <ion-col *ngIf="!courses" size="11" class="py-0">
+            <ion-card style="text-transform: capitalize;" (click)="goToDetail(iteration)"
+                      class="withdrawCard" *ngFor="let iteration of [1,2,3,4] let i = index">
+                <ion-card-header>
+                    <ion-item lines="none">
+                        <ion-skeleton-text animated style="width: 100%; height: 50px"></ion-skeleton-text>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-skeleton-text animated style="width: 100%; height: 20px"></ion-skeleton-text>
+                    </ion-item>
+                    <ion-row style="padding-left: 5%">
+                        <ion-col size="6"><ion-skeleton-text animated style="width: 100%"></ion-skeleton-text></ion-col>
+                        <ion-col size="6"><ion-skeleton-text animated style="width: 90%"></ion-skeleton-text></ion-col>
+                    </ion-row>
+                    <ion-row style="padding-left: 5%">
+                        <ion-col size="6">
+                            <ion-skeleton-text animated style="width: 100%"></ion-skeleton-text>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-skeleton-text animated style="width: 90%"></ion-skeleton-text>
+                        </ion-col>
+                    </ion-row>
+                </ion-card-header>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+</ion-content>

@@ -1,0 +1,44 @@
+Project:
+name:
+no. of dependents:
+start date:
+end date:
+donation Required: Donation = []; 
+type | string: i.e cloths, money, food, others
+quantity unit | string
+quantity : number
+date time | time stemp
+picture | 64basedImage
+
+NGO's:
+Name:
+type:
+adress: {
+street:
+city:
+state:
+}
+user: {
+fullName:
+email:
+phone:
+cnic:
+}
+
+
+doner:
+user: {
+fullName:
+email:
+phone:
+cnic:
+}
+address: {
+street:
+city:
+state:
+}
+
+
+
+
